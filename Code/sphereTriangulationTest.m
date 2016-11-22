@@ -8,7 +8,6 @@ clear variables
 
 debug = true;
 
-
 %% Generate data
 numPoints = 1000;
 [sphereX, sphereY, sphereZ] = generatePointsOnSphere(numPoints, 2);
