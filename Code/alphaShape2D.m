@@ -1,6 +1,5 @@
-function [ edges ] = alphaShape2D( x,y, alpha )
-%UNTITLED10 Summary of this function goes here
-%   Detailed explanation goes here
+function [ edges ] = alphaShape2D( x, y, alpha )
+%ALPHASHAPE2D Compute alpha shape for set of points.
 
 %alpha is radius
 nPoints = length(x);
