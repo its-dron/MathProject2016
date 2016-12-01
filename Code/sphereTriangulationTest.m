@@ -15,7 +15,7 @@ X = [sphereX, sphereY, sphereZ];
 %% Triangulate - OUR CODE WILL GO HERE
 % dt = delaunayTriangulation(sphereX, sphereY, sphereZ);
 % [tri, X] = freeBoundary(dt);
-[tri] = alphaShape3D(sphereX, sphereY, sphereZ, .5);
+[tri] = alphaShape3D(sphereX, sphereY, sphereZ, 0.5);
 
 %% Visualize
 trisurf(tri, X(:,1), X(:,2), X(:,3));
