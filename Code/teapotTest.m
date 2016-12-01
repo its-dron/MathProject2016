@@ -1,6 +1,3 @@
-% Generate random points on a surface of a sinusoid, then attempt to
-% triangulate the surface
-
 %% Housekeeping
 close all
 clc
@@ -24,7 +21,7 @@ y = data(1:100:end,2);
 z = data(1:100:end,3);
 
 %% Triangulate - OUR CODE WILL GO HERE
-alpha = 0.7;
+alpha = 0.45;
 [tri] = alphaShape3D(x, y, z, alpha);
 
 %% Visualize
