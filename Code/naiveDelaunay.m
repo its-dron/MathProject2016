@@ -30,6 +30,10 @@ for i = 1:nPoints - 2
             else
                 %this is a delaunay triangle
                 triangles{end+1}=[p1;p2;p3];
+                
+                % Plot
+                viscircles([centerX, centerY], radius, ...
+                        'LineWidth', 1);
             end
         end
     end
