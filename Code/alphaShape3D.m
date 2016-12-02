@@ -1,15 +1,15 @@
 function [ tri ] = alphaShape3D( x, y, z, alpha, plotFlag )
 %ALPHASHAPEeD (Very naively) compute alpha shape for set of points.
 
+if nargin < 5
+    plotFlag = false;
+end
+
 %alpha is radius
 nPoints = length(x);
 epsilon = 1e-4;
 tri = [];
 sphereOpacity = 0.25;
-
-if nargin < 4
-    plotFlag = false;
-end
 
 if plotFlag
     %ss stands for sphere surface
