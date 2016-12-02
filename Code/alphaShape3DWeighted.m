@@ -1,6 +1,9 @@
-function [ tri ] = alphaShape3DWeighted( x, y, z, alpha )
+function [ tri ] = alphaShape3DWeighted( x, y, z, alpha, k )
 %ALPHASHAPE3DNAIVEWEIGHTED (Very naively) compute alpha shape for set of points.
 
+if ~exist('k', 'var')
+    k = 5;
+end
 %alpha is radius
 nPoints = length(x);
 epsilon = 1e-4;
@@ -8,7 +11,6 @@ tri = [];
 
 %% First compute point densities
 X = [x y z];
-k = 5;
 [~, D] = knnsearch(X, X, 'K', k + 1);   
 D = D(:,2:end); % Remove reflexive neighbor
 avgDistKNN = mean(D,2);
