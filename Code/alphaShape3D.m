@@ -1,10 +1,29 @@
-function [ tri ] = alphaShape3D( x, y, z, alpha )
+function [ tri ] = alphaShape3D( x, y, z, alpha, plotFlag )
 %ALPHASHAPEeD (Very naively) compute alpha shape for set of points.
 
 %alpha is radius
 nPoints = length(x);
 epsilon = 1e-4;
 tri = [];
+sphereOpacity = 0.25;
+
+if nargin < 4
+    plotFlag = false;
+end
+
+if plotFlag
+    %ss stands for sphere surface
+    figure;
+    scatter3(x,y,z);
+    hold on
+    
+    [ssX, ssY, ssZ] = sphere;
+    ssX = (ssX/2) * alpha;
+    ssY = (ssY/2) * alpha;
+    ssZ = (ssZ/2) * alpha;
+end
+
+
 for i = 1:nPoints
     currentPt = [x(i) y(i) z(i)];
     % find all points within 2 alpha of the point
@@ -40,6 +59,13 @@ for i = 1:nPoints
                 %there are no points in that circle
                 %add that edge to the list
                 tri(end+1,:) = [i j k];
+                
+                if plotFlag
+                    h = surf(ssX + x(i), ssY + y(j), ssZ + z(j));
+                    set(h, 'FaceAlpha', sphereOpacity)
+                    shading interp
+                end
+                
                 continue;
             end
 
@@ -50,6 +76,12 @@ for i = 1:nPoints
                 %there are no points in that circle
                 %add that edge to the list
                 tri(end+1,:) = [i j k];
+
+                if plotFlag
+                    h = surf(ssX + x(i), ssY + y(j), ssZ + z(j));
+                    set(h, 'FaceAlpha', sphereOpacity)
+                    shading interp
+                end
             end
         end
 
