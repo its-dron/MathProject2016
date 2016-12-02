@@ -1,29 +1,23 @@
-function [ tri ] = alphaShape3D( x, y, z, alpha, plotFlag )
-%ALPHASHAPEeD (Very naively) compute alpha shape for set of points.
+function [ tri ] = alphaShape3DWeighted( x, y, z, alpha, k )
+%ALPHASHAPE3DNAIVEWEIGHTED (Very naively) compute alpha shape for set of points.
 
-if nargin < 5
-    plotFlag = false;
+if ~exist('k', 'var')
+    k = 5;
 end
-
 %alpha is radius
 nPoints = length(x);
 epsilon = 1e-4;
 tri = [];
-sphereOpacity = 0.25;
 
-if plotFlag
-    %ss stands for sphere surface
-    figure;
-    scatter3(x,y,z);
-    hold on
-    
-    [ssX, ssY, ssZ] = sphere;
-    ssX = (ssX/2) * alpha;
-    ssY = (ssY/2) * alpha;
-    ssZ = (ssZ/2) * alpha;
-end
+%% First compute point densities
+X = [x y z];
+[~, D] = knnsearch(X, X, 'K', k + 1);   
+D = D(:,2:end); % Remove reflexive neighbor
+avgDistKNN = mean(D,2);
+avgDist = mean(avgDistKNN);
+weights = avgDistKNN / avgDist; % Ratio of distance to global average distance
 
-
+%% Okay now run alpha shapes, but adjust alpha by calculated density
 for i = 1:nPoints
     currentPt = [x(i) y(i) z(i)];
     % find all points within 2 alpha of the point
@@ -45,7 +39,9 @@ for i = 1:nPoints
             end
             thirdPoint = [x(k) y(k) z(k)];
             
-            [C] = sphere_cent(currentPt, secondPoint, thirdPoint, alpha);
+            averageWeight = 1/3 * (weights(i) + weights(j) + weights(k));
+            alphaWeighted = alpha * averageWeight;
+            [C] = sphere_cent(currentPt, secondPoint, thirdPoint, alphaWeighted);
         
             if isempty(C)
                 continue
@@ -53,35 +49,22 @@ for i = 1:nPoints
             
             % check if there are points in the possible circles
             distances = pdist2(C(1,:), [x y z]);
-            if any(distances < alpha-epsilon)
+            if any(distances < alphaWeighted - epsilon)
                 %theres a point in the circle
             else
                 %there are no points in that circle
                 %add that edge to the list
                 tri(end+1,:) = [i j k];
-                
-                if plotFlag
-                    h = surf(ssX + x(i), ssY + y(j), ssZ + z(j));
-                    set(h, 'FaceAlpha', sphereOpacity)
-                    shading interp
-                end
-                
                 continue;
             end
 
             distances = pdist2(C(2,:),[x y z]);
-            if any(distances < alpha - epsilon)
+            if any(distances < alphaWeighted - epsilon)
                 %theres a point in the circle
             else
                 %there are no points in that circle
                 %add that edge to the list
                 tri(end+1,:) = [i j k];
-
-                if plotFlag
-                    h = surf(ssX + x(i), ssY + y(j), ssZ + z(j));
-                    set(h, 'FaceAlpha', sphereOpacity)
-                    shading interp
-                end
             end
         end
 
