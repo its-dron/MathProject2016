@@ -20,6 +20,7 @@ hold on
 % [ triangles ] = edgeFlipDelaunay( x ,y )
 [ triangles ] = naiveDelaunay( x ,y );
 
+
 %% Plot Triangles
 nTriangles = length(triangles);
 
