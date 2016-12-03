@@ -22,13 +22,37 @@ z = data(1:100:end,3);
 
 %% Triangulate - OUR CODE WILL GO HERE
 alpha = 0.45;
-% [tri] = alphaShape3D(x, y, z, alpha);
+[tri, sphereCenters] = alphaShape3D(x, y, z, alpha);
 
 %% Visualize
-figure;
-scatter3(x,y,z);
+% figure;
+% scatter3(x,y,z);
 
 figure;
 trisurf(tri, x, y, z);
 axis equal
 title(sprintf('Alpha Shape, \\alpha = %.2f ', alpha));
+
+%% Visualize an example sphere
+hold on
+if exist('h')==1
+    delete(h);
+end
+sphereOpacity = 1;
+iSphereToPlot = randi(size(sphereCenters,1));
+
+[ssX, ssY, ssZ] = sphere;
+ssX = ssX * alpha;
+ssY = ssY * alpha;
+ssZ = ssZ * alpha;
+
+sphereToPlotCenter = sphereCenters(iSphereToPlot, :);
+
+h = surf(ssX + sphereToPlotCenter(1), ...
+         ssY + sphereToPlotCenter(2), ...
+         ssZ + sphereToPlotCenter(3), ...
+         'EdgeColor','none','LineStyle','none','FaceLighting','phong', ...
+         'FaceColor', 'r');
+%delete(h); %if its not cool;
+set(h, 'FaceAlpha', sphereOpacity)
+% shading interp
