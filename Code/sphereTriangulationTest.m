@@ -9,7 +9,7 @@ clear variables
 debug = true;
 
 %% Generate data
-numPoints = 100;
+numPoints = 1000;
 [sphereX, sphereY, sphereZ] = generatePointsOnSphere(numPoints, 2);
 X = [sphereX, sphereY, sphereZ];
 scatter3(sphereX, sphereY, sphereZ);

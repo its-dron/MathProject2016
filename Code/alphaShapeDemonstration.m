@@ -32,14 +32,14 @@ y = y + 0.001*(rand(size(y))-0.5);
 
 %% Plot
 figure;
-subplot(231)
+subplot(161)
 scatter(x,y);
 title(sprintf('Datapoints Constituting a "%s"', letter));
 axis(axisRange);
 axis square
 
 %% Convex Hull
-subplot(232)
+subplot(162)
 scatter(x,y);
 title(sprintf('Convex Hull of a "%s"',letter));
 axis(axisRange);
@@ -54,9 +54,9 @@ alpha = 0.2;
 [ edges ] = alphaShape2D( x,y, alpha );
 nEdges = length(edges);
 
-subplot(234)
+subplot(165)
 scatter(x,y);
-title(sprintf('Alpha Shape, \\alpha = %.2f ', alpha));
+% title(sprintf('Alpha Shape, \\alpha = %.2f ', alpha));
 axis(axisRange);
 axis square
 hold on
@@ -72,9 +72,9 @@ alpha = 0.4;
 [ edges ] = alphaShape2D( x,y, alpha );
 nEdges = length(edges);
 
-subplot(235)
+subplot(164)
 scatter(x,y);
-title(sprintf('Alpha Shape, \\alpha = %.2f ', alpha));
+% title(sprintf('Alpha Shape, \\alpha = %.2f ', alpha));
 axis(axisRange);
 axis square
 hold on
@@ -90,9 +90,9 @@ alpha = 3;
 [ edges ] = alphaShape2D( x,y, alpha );
 nEdges = length(edges);
 
-subplot(236)
+subplot(163)
 scatter(x,y);
-title(sprintf('Alpha Shape, \\alpha = %.2f ', alpha));
+% title(sprintf('Alpha Shape, \\alpha = %.2f ', alpha));
 axis(axisRange);
 axis square
 hold on
