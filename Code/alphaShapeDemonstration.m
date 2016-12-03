@@ -4,9 +4,10 @@ close all
 clc
 
 %% Generate test data
-datasetName = 'E.mat';
-nPoints = 50;
-axisRange = [0, 5, 0, 5];
+letter = 'B';
+datasetName = [letter,'.mat'];
+nPoints = 70;
+axisRange = [1 3 1.8 4.1];%[0, 5, 0, 5];
 if exist(datasetName, 'file')
     load(datasetName, 'x', 'y', 'axisRange');
 else
@@ -23,6 +24,7 @@ else
     
     save(datasetName, 'x', 'y', 'axisRange');
 end
+axisRange = [1 3 1.8 4.1];%[0, 5, 0, 5];
 
 % add a small amount of random noise to each datapoint
 x = x + 0.001*(rand(size(x))-0.5);
@@ -32,14 +34,14 @@ y = y + 0.001*(rand(size(y))-0.5);
 figure;
 subplot(231)
 scatter(x,y);
-title('Datapoints Constituting an "E"');
+title(sprintf('Datapoints Constituting a "%s"', letter));
 axis(axisRange);
 axis square
 
 %% Convex Hull
 subplot(232)
 scatter(x,y);
-title('Convex Hull of an "E"');
+title(sprintf('Convex Hull of a "%s"',letter));
 axis(axisRange);
 axis square
 hold on;
@@ -48,7 +50,7 @@ line([poly.v(:,1); poly.v(1,1)], ...
      [poly.v(:,2); poly.v(1,2)], 'Color', 'r');
  
 %% Alpha shape
-alpha = 0.4;
+alpha = 0.2;
 [ edges ] = alphaShape2D( x,y, alpha );
 nEdges = length(edges);
 
@@ -66,7 +68,7 @@ for i = 1:nEdges
 end
 
 %% Alpha shape
-alpha = 0.5;
+alpha = 0.4;
 [ edges ] = alphaShape2D( x,y, alpha );
 nEdges = length(edges);
 

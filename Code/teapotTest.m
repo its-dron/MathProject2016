@@ -22,7 +22,7 @@ z = data(1:100:end,3);
 
 %% Triangulate - OUR CODE WILL GO HERE
 alpha = 0.45;
-[tri] = alphaShape3D(x, y, z, alpha);
+% [tri] = alphaShape3D(x, y, z, alpha);
 
 %% Visualize
 figure;
